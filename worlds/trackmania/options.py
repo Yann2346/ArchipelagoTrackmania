@@ -333,7 +333,7 @@ class TrackmaniaOptions(PerGameCommonOptions):
 option_groups: dict[str, list[Any]] = {
     "Generation":[ProgressionBalancing, Accessibility],
     "Difficulty":[TargetTime, SkipPercentage, DiscountPercentage, DiscountAmount, MapDifficulties],
-    "Campaign Configuration":[MedalRequirement, ProgressiveTargetTimeChance, SeriesNumber, SeriesMinimumMapNumber, SeriesMaximumMapNumber],
+    "Campaign Configuration":[ProgressionSystem, MedalRequirement, ProgressiveTargetTimeChance, SeriesNumber, SeriesMinimumMapNumber, SeriesMaximumMapNumber],
     "Map Search Settings":[MapTags, MapETags, MapTagsInclusive, RandomSeriesTags, HasAward, InTotd, MapMinimumLength, MapMaximumLength],
     "Advanced":[FirstSeriesSize, DisableBronzeLocations, DisableBronzeMedals, DisableSilverLocations, DisableSilverMedals, DisableGoldLocations, DisableGoldMedals, DisableAuthorLocations, CustomSeries]#, PlandoItems]
 }
