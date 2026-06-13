@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime  # for custom_series: uploaded_before and uploaded_after
 from schema import Schema, And, Or, Optional  # for custom series validation
 from typing import Any
-from Options import Toggle, Range, OptionSet, OptionDict, PerGameCommonOptions, OptionGroup, ProgressionBalancing, Accessibility, Visibility#, PlandoItems
+from Options import Choice, Toggle, Range, OptionSet, OptionDict, PerGameCommonOptions, OptionGroup, ProgressionBalancing, Accessibility, Visibility#, PlandoItems
 from .data import get_all_map_tags, get_excluded_map_tags, get_all_map_difficulties, get_default_map_difficulties
 
 #https://github.com/ArchipelagoMW/Archipelago/blob/main/docs/options%20api.md
@@ -27,6 +27,24 @@ class TargetTime(Range):
     range_end = 300
     default = 240
 
+class ProgressionSystem(Choice):
+    """The way the progression works
+
+    If you choose "only highest medal counts" then the first medal bellow your target time makes you progress. 
+    For example if your target time is 240, the gold medals sent to you are the ones that will unlock your next serie.
+
+    If you choose "medals are equals" then all medals bellow your target time make you progress.
+    For example if your target time is 240, gold, silver and bronze medals unlock your next series.
+
+    If you choose "the higher the better" then the higher medal bellow your target time has better value than the others.
+    For example if your target time is 240, gold, silver and braonze medals respectively grant you 5, 3 and 2 points each (instead of 1 points for each medals with the two first modes).
+    """
+    display_name = "Progression system"
+    option_only_highest_medal_counts = 0
+    option_medals_are_equals = 1
+    option_the_higher_the_better = 2
+    default = 0 
+    
 class SeriesNumber(Range):
     """Sets the number of series that you must play."""
     display_name = "Number of Series"
@@ -283,6 +301,7 @@ class TrackmaniaOptions(PerGameCommonOptions):
     accessibility: Accessibility
 
     target_time: TargetTime
+    progression_system: ProgressionSystem
     series_number : SeriesNumber
     series_minimum_map_number: SeriesMinimumMapNumber
     series_maximum_map_number: SeriesMaximumMapNumber
