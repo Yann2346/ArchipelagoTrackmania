@@ -132,6 +132,7 @@ class TrackmaniaWorld(World):
     def fill_slot_data(self) -> dict:
         return {
             "TargetTimeSetting": (float(self.options.target_time.value) / 100.0),
+            "ProgressionSystem": ("ProgressionSystem": self.options.progression_system.value),
             "DiscountAmount": (float(self.options.discount_amount) / 1000.0),
             "SeriesNumber": self.options.series_number.value,
             "DisableBronze": self.options.disable_bronze_locations.value,
