@@ -20,5 +20,60 @@ def set_rules(world: "TrackmaniaWorld"):
 
 def set_series_rules(world: "TrackmaniaWorld", series_index : int, medal_total: int):
     entrance_name: str = f"{get_series_name(series_index - 1)} -> {get_series_name(series_index)}"
-    set_rule(world.get_entrance(entrance_name),
-             lambda state: state.has(get_progression_medal(world), world.player, medal_total))
+    progression_system = world.options.progression_system.value
+    
+    if progression_system == 0 :
+        set_rule(world.get_entrance(entrance_name),
+                 lambda state: state.has(get_progression_medal(world), world.player, medal_total))
+        
+    if progression_system == 1 : 
+        progression_medal = get_progression_medal(world)
+        if progression_medal == "Author Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Author Medal", world.player) +
+                        state.count("Gold Medal", world.player) +
+                        state.count("Silver Medal", world.player) +
+                        state.count("Bronze Medal", world.player)) >= medal_total * 4)
+        if progression_medal == "Gold Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Gold Medal", world.player) +
+                        state.count("Silver Medal", world.player) +
+                        state.count("Bronze Medal", world.player)) >= medal_total * 3)
+        if progression_medal == "Silver Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Silver Medal", world.player) +
+                        state.count("Bronze Medal", world.player)) >= medal_total * 2)
+        if progression_medal == "Bronze Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Bronze Medal", world.player)) >= medal_total)
+            
+    if progression_system == 2 :
+        progression_medal = get_progression_medal(world)
+        if progression_medal == "Author Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Author Medal", world.player) * 5 +
+                     state.count("Gold Medal", world.player) * 3 +
+                     state.count("Silver Medal", world.player) * 1 +
+                     state.count("Bronze Medal", world.player) * 1
+                 ) >= medal_total * 10)
+        if progression_medal == "Gold Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Gold Medal", world.player) * 5 +
+                        state.count("Silver Medal", world.player) * 3 +
+                        state.count("Bronze Medal", world.player) * 2) >= medal_total * 10)
+        if progression_medal == "Silver Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Silver Medal", world.player) * 7 +
+                        state.count("Bronze Medal", world.player) * 3) >= medal_total * 10)
+        if progression_medal == "Bronze Medal":
+            set_rule(world.get_entrance(entrance_name),
+                 lambda state: (state.count("Bronze Medal", world.player) * 10) >= medal_total * 10)
+
+    # default just in case
+    else :
+         set_rule(world.get_entrance(entrance_name),
+                 lambda state: state.has(get_progression_medal(world), world.player, medal_total))
+    
+
+            
+        
