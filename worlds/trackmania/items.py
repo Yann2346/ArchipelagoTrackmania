@@ -23,24 +23,44 @@ trackmania_item_groups = {
     "Filler Items": set(filler_item_names)
 }
 
-#Item classification for most of our items is dependent on the target_time setting, so it cannot be hardcoded.
+#Item classification for most of our items is dependent on the target_time setting and the progression system, so it cannot be hardcoded.
 def determine_item_classification(world:"TrackmaniaWorld", name: str) -> ItemClassification:
     target_time = world.options.target_time
-    match name:
-        case "Bronze Medal":
-            return ItemClassification.progression if target_time < 100 else ItemClassification.filler
-        case "Silver Medal":
-            return ItemClassification.progression if 100 <= target_time < 200 else ItemClassification.filler
-        case "Gold Medal":
-            return ItemClassification.progression if 200 <= target_time < 300 else ItemClassification.filler
-        case "Author Medal":
-            return ItemClassification.progression if 300 <= target_time else ItemClassification.filler
-        case "Map Skip":
-            return ItemClassification.useful
-        case "PB Discount":
-            return ItemClassification.useful
-        case _:
-            return ItemClassification.filler
+    progression_system = world.options.progression_system
+    
+    if progression_system == 0:
+        match name:
+            case "Bronze Medal":
+                return ItemClassification.progression if target_time < 100 else ItemClassification.filler
+            case "Silver Medal":
+                return ItemClassification.progression if 100 <= target_time < 200 else ItemClassification.filler
+            case "Gold Medal":
+                return ItemClassification.progression if 200 <= target_time < 300 else ItemClassification.filler
+            case "Author Medal":
+                return ItemClassification.progression if 300 <= target_time else ItemClassification.filler
+            case "Map Skip":
+                return ItemClassification.useful
+            case "PB Discount":
+                return ItemClassification.useful
+            case _:
+                return ItemClassification.filler
+                
+    if progression_system == 1 or progression_system == 2:
+        match name:
+            case "Author Medal":
+                return ItemClassification.progression if target_time >= 300 else ItemClassification.filler
+            case "Gold Medal":
+                return ItemClassification.progression if target_time >= 200 else ItemClassification.filler
+            case "Silver Medal":
+                return ItemClassification.progression if target_time >= 100 else ItemClassification.filler
+            case "Bronze Medal":
+                return ItemClassification.progression
+            case "Map Skip":
+                return ItemClassification.useful
+            case "PB Discount":
+                return ItemClassification.useful
+            case _:
+                return ItemClassification.filler
         
 def get_progression_medal(world: "TrackmaniaWorld") -> str:
     match world.options.target_time:
