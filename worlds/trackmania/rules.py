@@ -49,8 +49,7 @@ def set_rules(world: "TrackmaniaWorld"):
                  lambda state: (state.count("Author Medal", world.player) * 5 +
                      state.count("Gold Medal", world.player) * 3 +
                      state.count("Silver Medal", world.player) * 1 +
-                     state.count("Bronze Medal", world.player) * 1
-                 ) >= final_medal_requirement * 10)
+                     state.count("Bronze Medal", world.player) * 1) >= final_medal_requirement * 10)
         if progression_medal == "Gold Medal":
             set_rule(world.get_entrance("Victory!", world.player),
                  lambda state: (state.count("Gold Medal", world.player) * 5 +
