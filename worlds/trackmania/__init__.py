@@ -139,6 +139,9 @@ class TrackmaniaWorld(World):
             "DisableSilver": self.options.disable_silver_locations.value,
             "DisableGold": self.options.disable_gold_locations.value,
             "DisableAuthor": self.options.disable_author_locations.value,
+            "DisableGoldMedals": self.options.disable_gold_medals.value,
+            "DisableSilverMedals": self.options.disable_silver_medals.value,
+            "DisableBronzeMedals": self.options.disable_bronze_medals.value,
             "SeriesData": self.series_data
         }
 
