@@ -22,6 +22,25 @@ def create_check(world: "TrackmaniaWorld", reg: Region, map_name: str, check_typ
 
     reg.locations.append(location)
 
+
+def get_number_medal_enabled(world: "TrackmaniaWorld") -> int:
+    if world.options.progression_system.value == 0:
+        return 1 
+
+    if world.options.progression_system.value == 1 or world.options.progression_system.value == 2:
+        total = 0
+        if world.options.target_time < 100 or world.options.disable_bronze_medals <= 0:
+            total += 1
+        if 100 <= world.options.target_time < 200 or (world.options.target_time >= 100 and world.options.disable_silver_medals <= 0):
+            total += 1
+        if 200 <= world.options.target_time < 300 or (world.options.target_time >=200 and world.options.disable_gold_medals <= 0):
+            total += 1
+        if world.options.target_time >=300:
+            total += 1
+        return total
+
+    
+    
 def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : int):
     map_name = f"{series.name} {get_map_name(map_index)}"
     reg = series
