@@ -26,19 +26,61 @@ def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : in
     map_name = f"{series.name} {get_map_name(map_index)}"
     reg = series
 
-    if world.options.target_time < 100 or world.options.disable_bronze_locations <= 0:
-        create_check(world, reg, map_name, MapCheckTypes.Bronze)
+    if world.options.progression_system.value == 0:
+        if world.options.target_time < 100 or world.options.disable_bronze_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Bronze)
 
-    if world.options.target_time >=100 and world.options.disable_silver_locations <= 0:
-        create_check(world, reg, map_name, MapCheckTypes.Silver)
+        if world.options.target_time >=100 and world.options.disable_silver_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Silver)
 
-    if world.options.target_time >=200 and world.options.disable_gold_locations <= 0:
-        create_check(world, reg, map_name, MapCheckTypes.Gold)
+        if world.options.target_time >=200 and world.options.disable_gold_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Gold)
 
-    if world.options.target_time >=300 and world.options.disable_author_locations <= 0:
-        create_check(world, reg, map_name, MapCheckTypes.Author)
+        if world.options.target_time >=300 and world.options.disable_author_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Author)
 
-    create_check(world, reg, map_name, MapCheckTypes.Target)
+        create_check(world, reg, map_name, MapCheckTypes.Target)
+
+    if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
+        # First we try to create checks according to the parameters (allows to disable 2 checks only if 2 medals or more are disabled for example)
+        number_check_to_create = get_number_medal_enabled()
+        createdAuthor = False
+        createdGold = False
+        createdSilver = False
+        createdBronze = False
+        
+        if world.options.target_time >=300 and world.options.disable_author_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Author)
+            number_check_to_create = number_check_to_create - 1
+            createdAuthor = True
+            
+        if world.options.target_time >=200 and world.options.disable_gold_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Gold)
+            number_check_to_create = number_check_to_create - 1
+            createdGold = True
+
+        if world.options.target_time >=100 and world.options.disable_silver_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Silver)
+            number_check_to_create = number_check_to_create - 1
+            createdSilver = True
+            
+        if world.options.target_time < 100 or world.options.disable_bronze_locations <= 0:
+            create_check(world, reg, map_name, MapCheckTypes.Bronze)
+            number_check_to_create = number_check_to_create - 1
+            createdBronze = True
+
+        # Then if there are to many medal enabled compared to the number of checks enabled the checks are completed
+        if number_check_to_create > 0 and not createdBronze:
+            create_check(world, reg, map_name, MapCheckTypes.Bronze)
+            number_check_to_create = number_check_to_create - 1
+        if number_check_to_create > 0 and not createdSilver:
+            create_check(world, reg, map_name, MapCheckTypes.Silver)
+            number_check_to_create = number_check_to_create - 1
+        if number_check_to_create > 0 and not createdGold:
+            create_check(world, reg, map_name, MapCheckTypes.Gold)
+            number_check_to_create = number_check_to_create - 1
+
+        create_check(world, reg, map_name, MapCheckTypes.Target)
 
 def create_series_region(world: "TrackmaniaWorld", series: int) -> Region:
     series_name = get_series_name(series)
