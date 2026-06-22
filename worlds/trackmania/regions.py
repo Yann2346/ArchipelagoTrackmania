@@ -88,7 +88,7 @@ def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : in
             number_check_to_create = number_check_to_create - 1
             createdBronze = True
 
-        # Then if there are to many medal enabled compared to the number of checks enabled the checks are completed
+        # Then if there are too many medals enabled compared to the number of checks enabled the checks are completed from easiest to hardest
         if number_check_to_create > 0 and not createdBronze:
             create_check(world, reg, map_name, MapCheckTypes.Bronze)
             number_check_to_create = number_check_to_create - 1
@@ -98,6 +98,9 @@ def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : in
         if number_check_to_create > 0 and not createdGold:
             create_check(world, reg, map_name, MapCheckTypes.Gold)
             number_check_to_create = number_check_to_create - 1
+        if number_check_to_create > 0 and not createdAuthor:
+            create_check(world, reg, map_name, MapCheckTypes.Author)
+        
 
         create_check(world, reg, map_name, MapCheckTypes.Target)
 
