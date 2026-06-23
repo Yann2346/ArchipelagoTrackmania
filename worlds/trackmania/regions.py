@@ -62,7 +62,7 @@ def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : in
 
     if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
         # First we try to create checks according to the parameters (allows to disable 2 checks only if 2 medals or more are disabled for example)
-        number_check_to_create = get_number_medal_enabled()
+        number_check_to_create = get_number_medal_enabled(world)
         createdAuthor = False
         createdGold = False
         createdSilver = False
