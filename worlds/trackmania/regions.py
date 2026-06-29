@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from .items import TrackmaniaItem, get_number_medal_enabled
+from .items import TrackmaniaItem, get_number_progression_medal_enabled
 from .locations import TrackmaniaLocation, MapCheckTypes, get_map_name, get_check_type_name, get_series_name
 from BaseClasses import Region, LocationProgressType, ItemClassification
 
@@ -43,7 +43,7 @@ def create_track_checks(world: "TrackmaniaWorld", series: Region, map_index : in
 
     if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
         # First we try to create checks according to the parameters (allows to disable 2 checks only if 2 medals or more are disabled for example)
-        number_check_to_create = get_number_medal_enabled(world)
+        number_check_to_create = get_number_progression_medal_enabled(world)
         createdAuthor = False
         createdGold = False
         createdSilver = False
