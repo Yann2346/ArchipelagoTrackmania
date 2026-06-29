@@ -154,7 +154,7 @@ def get_medal_enabled(world: "TrackmaniaWorld", medal: str) -> bool:
         case _:
             return True
 
-def get_number_medal_enabled(world: "TrackmaniaWorld") -> int:
+def get_number_progression_medal_enabled(world: "TrackmaniaWorld") -> int:
     if world.options.progression_system.value == 0:
         return 1 
 
@@ -182,7 +182,7 @@ def get_locations_per_map(world: "TrackmaniaWorld") -> int:
         checks += 1
 
     if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
-        if checks < get_number_medal_enabled(world):
+        if checks < get_number_progression_medal_enabled(world):
             checks = get_number_medals_enabled(world)
     return checks
     
