@@ -154,6 +154,21 @@ def get_medal_enabled(world: "TrackmaniaWorld", medal: str) -> bool:
         case _:
             return True
 
+def get_number_medal_enabled(world: "TrackmaniaWorld") -> int:
+    if world.options.progression_system.value == 0:
+        return 1 
+
+    if world.options.progression_system.value == 1 or world.options.progression_system.value == 2:
+        total = 0
+        if world.options.target_time < 100 or world.options.disable_bronze_medals <= 0:
+            total += 1
+        if 100 <= world.options.target_time < 200 or (world.options.target_time >= 100 and world.options.disable_silver_medals <= 0):
+            total += 1
+        if 200 <= world.options.target_time < 300 or (world.options.target_time >=200 and world.options.disable_gold_medals <= 0):
+            total += 1
+        if world.options.target_time >=300:
+            total += 1
+        return total
 
 def get_locations_per_map(world: "TrackmaniaWorld") -> int:
     checks: int = 1
@@ -165,6 +180,10 @@ def get_locations_per_map(world: "TrackmaniaWorld") -> int:
         checks += 1
     if world.options.target_time >= 300 and not world.options.disable_author_locations:
         checks += 1
+
+    if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
+        if checks < get_number_medal_enabled(world):
+            checks = get_number_medals_enabled(world)
     return checks
     
 
