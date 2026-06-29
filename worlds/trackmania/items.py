@@ -183,7 +183,8 @@ def get_locations_per_map(world: "TrackmaniaWorld") -> int:
 
     if world.options.progression_system.value == 1 or  world.options.progression_system.value == 2:
         if checks < get_number_progression_medal_enabled(world):
-            checks = get_number_progression_medal_enabled(world)
+            # The target check must be added here via the +1
+            checks = get_number_progression_medal_enabled(world) + 1
     return checks
     
 
