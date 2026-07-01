@@ -28,16 +28,24 @@ class TargetTime(Range):
     default = 240
 
 class ProgressionSystem(Choice):
-    """The way the progression works
+    """The rules defining what you need to progress
 
-    If you choose "only highest medal counts" then the first medal bellow your target time makes you progress. 
-    For example if your target time is 240, the gold medals sent to you are the ones that will unlock your next serie.
+    "only highest medal counts" : the first medal bellow your target time
+        is needed to make progress. If your target time is 240, the gold 
+        medals sent to you are the ones that will unlock your next series.
 
-    If you choose "medals are equals" then all medals bellow your target time make you progress.
-    For example if your target time is 240, gold, silver and bronze medals unlock your next series.
+    "medals are equals" : all medals bellow your target time are needed
+        to make progress. If your target time is 240, gold, silver and 
+        bronze medals unlock your next series.
 
-    If you choose "the higher the better" then the higher medal bellow your target time has better value than the others.
-    For example if your target time is 240, gold, silver and braonze medals respectively grant you 5, 3 and 2 points each (instead of 1 points for each medals with the two first modes).
+    "the higher the better" : the higher medals bellow your target time 
+        have better value than the others. If your target time is 240,
+        gold, silver and bronze medals grant you points needed to unlock
+        your next series.
+        4 medals enabled : 5, 3, 1, 1 points respectively
+        3 medals enabled : 5, 3, 2 points respectively
+        2 medals enabled : 7, 3 points respectively
+        1 medal enabled : 1 point per medal obtained
     """
     display_name = "Progression system"
     option_only_highest_medal_counts = 0
@@ -67,11 +75,15 @@ class SeriesMaximumMapNumber(Range):
     default = 15
 
 class RandomSeriesTags(Toggle):
-    """Enable to pick one of your tags at random to use for each series, instead of using all tags for each series"""
+    """Enable to pick one of your tags at random to use for each series,
+    instead of using all tags for each series
+    """
     display_name = "Pick Random Tag for each Series"
 
 class FirstSeriesSize(Range):
-    """This is an override setting to manually set the size of the first series. Some games, like Super Metroid, work best with small first areas. This setting is here to enable that!
+    """This is an override setting to manually set the size of the first series.
+    Some games, like Super Metroid, work best with small first areas. This setting
+    is here to enable that!
 
     Set this to zero to have the first series randomized the same as all the others.
     """
@@ -102,9 +114,11 @@ class SkipPercentage(Range):
     default = 5
 
 class DiscountPercentage(Range):
-    """The number of target time discounts in the item pool, calculated as a percentage of the total number of maps.
+    """The number of target time discounts in the item pool, calculated as a percentage of
+    the total number of maps.
     
-    This item decreases your personal best time used by this plugin by 1.5% (by default). That might not sound like a lot, but it helps!
+    This item decreases your personal best time used by this plugin by 1.5% (by default).
+    That might not sound like a lot, but it helps!
     """
     display_name = "PB Discount Item Percentage"
     range_start = 0
@@ -113,7 +127,10 @@ class DiscountPercentage(Range):
 
 
 class DiscountAmount(Range):
-    """The amount PB Discount Items reduce your effective personal best by. The discount is calculated by dividing this setting by 10 and multiplying it by the author time. For example, the default setting of 15 becomes 1.5% of the author time.
+    """The amount PB Discount Items reduce your effective personal best by.
+    The discount is calculated by dividing this setting by 10 and multiplying
+    it by the author time. For example, the default setting of 15 becomes 1.5%
+    of the author time.
     """
     display_name = "PB Discount Item Strength"
     range_start = 1
@@ -121,7 +138,9 @@ class DiscountAmount(Range):
     default = 15
 
 class ProgressiveTargetTimeChance(Range):
-    """Percentage chance that the item received for beating the target time is guaranteed to be a progression item"""
+    """Percentage chance that the item received for beating the target time is
+    guaranteed to be a progression item
+    """
     display_name = "Target Time Progression Item Chance"
     range_start = 0
     range_end = 100
@@ -175,7 +194,16 @@ class InTotd(Toggle):
     display_name = "Must Be TOTD"
 
 class DisableBronzeLocations(Toggle):
-    """Disable Bronze Medal times from counting as locations."""
+    """Disable Bronze Medal times from counting as locations.
+    
+    "medals are equals" and "the higher the better" : if there
+    are more medals enabled than locations* the later will still
+    be created in the following order : bronze, silver, gold and
+    author.
+    
+    *here location refer to bronze, silver, gold and author
+    times locations and do not include the progression location
+    """
     display_name = "Remove Bronze Locations"
 
 class DisableBronzeMedals(Toggle):
@@ -184,7 +212,16 @@ class DisableBronzeMedals(Toggle):
 
 
 class DisableSilverLocations(Toggle):
-    """Disable Silver Medal times from counting as locations."""
+    """Disable Silver Medal times from counting as locations.
+
+    "medals are equals" and "the higher the better" : if there
+    are more medals enabled than locations* the later will still
+    be created in the following order : bronze, silver, gold and
+    author.
+    
+    *here location refer to bronze, silver, gold and author
+    times locations and do not include the progression location
+    """
     display_name = "Remove Silver Locations"
 
 
@@ -194,7 +231,16 @@ class DisableSilverMedals(Toggle):
 
 
 class DisableGoldLocations(Toggle):
-    """Disable Gold Medal times from counting as locations."""
+    """Disable Gold Medal times from counting as locations.
+
+    "medals are equals" and "the higher the better" : if there
+    are more medals enabled than locations* the later will still
+    be created in the following order : bronze, silver, gold and
+    author.
+    
+    *here location refer to bronze, silver, gold and author
+    times locations and do not include the progression location
+    """
     display_name = "Remove Gold Locations"
 
 
@@ -204,8 +250,12 @@ class DisableGoldMedals(Toggle):
 
 
 class DisableAuthorLocations(Toggle):
-    """Disable Author Medal times from counting as locations."""
-    display_name = "Remove Bronze Locations"
+    """Disable Author Medal times from counting as locations.
+
+    "medals are equals" and "the higher the better" : this option
+    effectively does nothing
+    """
+    display_name = "Remove Author Locations"
 
 # Schema for custom series options below.
 LuaBool = Or(bool, And(int, lambda v: v in (0, 1)))
