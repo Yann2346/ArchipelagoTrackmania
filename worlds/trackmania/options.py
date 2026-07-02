@@ -197,12 +197,9 @@ class DisableBronzeLocations(Toggle):
     """Disable Bronze Medal times from counting as locations.
     
     "medals are equals" and "the higher the better" : if there
-    are more medals enabled than locations* the later will still
-    be created in the following order : bronze, silver, gold and
-    author.
-    
-    *here location refer to bronze, silver, gold and author
-    times locations and do not include the progression location
+        are more medals enabled than locations the later will 
+        still be created in the following order : bronze, silver,
+        gold and author.
     """
     display_name = "Remove Bronze Locations"
 
@@ -215,12 +212,9 @@ class DisableSilverLocations(Toggle):
     """Disable Silver Medal times from counting as locations.
 
     "medals are equals" and "the higher the better" : if there
-    are more medals enabled than locations* the later will still
-    be created in the following order : bronze, silver, gold and
-    author.
-    
-    *here location refer to bronze, silver, gold and author
-    times locations and do not include the progression location
+        are more medals enabled than locations the later will 
+        still be created in the following order : bronze, silver,
+        gold and author.
     """
     display_name = "Remove Silver Locations"
 
@@ -234,12 +228,9 @@ class DisableGoldLocations(Toggle):
     """Disable Gold Medal times from counting as locations.
 
     "medals are equals" and "the higher the better" : if there
-    are more medals enabled than locations* the later will still
-    be created in the following order : bronze, silver, gold and
-    author.
-    
-    *here location refer to bronze, silver, gold and author
-    times locations and do not include the progression location
+        are more medals enabled than locations the later will 
+        still be created in the following order : bronze, silver,
+        gold and author.
     """
     display_name = "Remove Gold Locations"
 
@@ -252,8 +243,10 @@ class DisableGoldMedals(Toggle):
 class DisableAuthorLocations(Toggle):
     """Disable Author Medal times from counting as locations.
 
-    "medals are equals" and "the higher the better" : this option
-    effectively does nothing
+    "medals are equals" and "the higher the better" : if there
+        are more medals enabled than locations the later will 
+        still be created in the following order : bronze, silver,
+        gold and author.
     """
     display_name = "Remove Author Locations"
 
